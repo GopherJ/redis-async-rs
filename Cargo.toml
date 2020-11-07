@@ -1,24 +1,24 @@
 [package]
-name = "redis-async"
-version = "0.7.0"
-authors = ["Ben Ashford <benashford@users.noreply.github.com>"]
-license = "MIT/Apache-2.0"
-readme = "README.md"
+authors     = ["Ben Ashford <benashford@users.noreply.github.com>"]
 description = "An asynchronous futures based Redis client for Rust using Tokio"
-repository = "https://github.com/benashford/redis-async-rs"
-keywords = ["redis", "tokio"]
-edition = "2018"
+edition     = "2018"
+keywords    = ["redis", "tokio"]
+license     = "MIT/Apache-2.0"
+name        = "redis-async"
+readme      = "README.md"
+repository  = "https://github.com/benashford/redis-async-rs"
+version     = "0.7.1"
 
 [dependencies]
-bytes = "^0.6.0"
-log = "^0.4.11"
+bytes           = "^0.6.0"
 futures-channel = "^0.3.7"
-futures-sink = "^0.3.7"
-futures-util = "^0.3.7"
-tokio = { version = "^0.3.2", features = ["net", "time"] }
-tokio-util = { version = "^0.5", features = ["codec"] }
+futures-sink    = "^0.3.7"
+futures-util    = "^0.3.7"
+log             = "^0.4.11"
+tokio           = { version = "^0.3.3", features = ["net", "time", "rt"] }
+tokio-util      = { version = "^0.5", features = ["codec"] }
 
 [dev-dependencies]
 env_logger = "^0.8.1"
-futures = "^0.3.7"
-tokio = { version = "^0.3.2", features = ["full"] }
+futures    = "^0.3.7"
+tokio      = { version = "^0.3.2", features = ["full"] }
