@@ -138,13 +138,21 @@ impl PubsubConnectionInner {
                 (Some(msg), Some(topic), Some(message_type), None) => {
                     match (msg, String::from_resp(topic), message_type) {
                         (msg, Ok(topic), resp::RespValue::BulkString(bytes)) => (bytes, topic, msg),
-                        _ => return Err(error::unexpected("Incorrect format of a PUBSUB message")),
+                        _ => {
+                            return Err(error::unexpected(
+                                "Incorrect format of a SUBSCRIBE message",
+                            ))
+                        }
                     }
                 }
                 (Some(msg), Some(_), Some(topic), Some(message_type)) => {
                     match (msg, String::from_resp(topic), message_type) {
                         (msg, Ok(topic), resp::RespValue::BulkString(bytes)) => (bytes, topic, msg),
-                        _ => return Err(error::unexpected("Incorrect format of a PUBSUB message")),
+                        _ => {
+                            return Err(error::unexpected(
+                                "Incorrect format of a PSUBSCRIBE message",
+                            ))
+                        }
                     }
                 }
                 _ => {
@@ -184,7 +192,7 @@ impl PubsubConnectionInner {
                 }
                 None => {
                     return Err(error::internal(format!(
-                        "Received unexpected subscribe notification for topic: {}",
+                        "Received unexpected psubscribe notification for topic: {}",
                         topic
                     )));
                 }
@@ -212,7 +220,7 @@ impl PubsubConnectionInner {
                     }
                     Entry::Vacant(vacant) => {
                         return Err(error::internal(format!(
-                            "Unexpected unsubscribe message: {}",
+                            "Unexpected punsubscribe message: {}",
                             vacant.key()
                         )));
                     }
@@ -503,7 +511,7 @@ mod test {
             .take(3)
             .try_collect()
             .await
-            .expect("Cannot collect two values");
+            .expect("Cannot collect three values");
 
         assert_eq!(result.len(), 3);
         assert_eq!(result[0], "test-message-1".into());
